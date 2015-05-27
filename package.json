@@ -1,0 +1,23 @@
+{
+  "name": "angularts-ngdash",
+  "version": "0.0.1",
+  "description": "add lodash as a dependency in angularjs way",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hgrathi/angularts-ngdash.git"
+  },
+  "keywords": [
+    "lodash",
+    "angularjs"
+  ],
+  "author": "Harish Rathi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hgrathi/angularts-ngdash/issues"
+  },
+  "homepage": "https://github.com/hgrathi/angularts-ngdash"
+}
