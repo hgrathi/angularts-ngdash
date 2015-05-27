@@ -1,0 +1,21 @@
+{
+  "name": "angularts-ngdash",
+  "version": "0.0.1",
+  "homepage": "https://github.com/hgrathi/angularts-ngdash",
+  "authors": [
+    "Harish Rathi <harish.rathi@algosystech.com>"
+  ],
+  "description": "load lodash in angular way",
+  "keywords": [
+    "angularjs",
+    "lodash"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
