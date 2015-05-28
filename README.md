@@ -1,10 +1,7 @@
 ngdash
 =========
 
-This is a wrapper for the utility library [Lo-Dash](http://lodash.com/) for
-Angular JS. One aim for this project is to ensure Lo-Dash doesn't have to be
-left on the window, and we use Lo-Dash with Angular, in the normal depenedency
- injection manner.
+Inject [Lo-Dash](http://lodash.com/) in angular way.
 
 ## Installing
 Install via bower
@@ -18,13 +15,28 @@ Require it into your application (after Angular)
 Add the module as a dependency to your app
 
 ```js
-var app = angular.module('yourAwesomeApp', ['tpl.ngdash']);
+var app = angular.module('app', ['tpl.ngdash']);
 ```
 
 And inject it into your controller like so!
 
 ```js
-var YourCtrl = app.controller('yourController', function($scope, ngdash) {
-  lodash.assign({ 'a': 1 }, { 'b': 2 }, { 'c': 3 });
+var YourCtrl = app.controller('controller', function($scope, ngdash) {
+  ngdash.indexOf(["a","b","c"], "a");
 });
+```
+
+Remove global reference from window
+
+```js
+app.config(function(ngdashProvider){
+  ngdashProvider.deleteGlobalReference();
+})
+```
+
+Added extra function
+
+```js
+ ngdash.isNullOrUndefined()
+ ngdash.isNullOrEmpty()
 ```
