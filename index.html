@@ -1,5 +1,25 @@
 <!DOCTYPE html>
-<html>
-	<head></head>
-	<body></body>
+<html ng-app="testmodule">
+	<head>
+		<!-- bower:css -->
+		<!-- endbower -->
+	</head>
+	<body ng-controller="testController as vm">
+		<div ng-repeat="row in vm.nullUndefined">
+			<div>value : {{row.value}}</div>
+			<div>result : {{row.result}}</div>
+		</div>
+		<div ng-repeat="row in vm.nullEmpty">
+			<div>value : {{row.value}}</div>
+			<div>result : {{row.result}}</div>
+		</div>
+		<!-- bower:js -->
+		<script src="bower_components/lodash/lodash.js"></script>
+		<script src="bower_components/angularjs/angular.js"></script>
+		<!-- endbower -->
+		<!-- inject:sourcejs source.js -->
+		<!-- endinject -->
+		<!-- inject:testfixturejs testfixture.js -->
+		<!-- endinject -->
+	</body>
 </html>
