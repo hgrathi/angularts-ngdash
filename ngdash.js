@@ -10,15 +10,15 @@
     //////////////////////////////////////////////////////////////////
 
     ngdashProvider.$inject = ['$windowProvider'];
-    function ngdashProvider($windowProvider){
+    function ngdashProvider($windowProvider) {
 
         var dash = $windowProvider.$get()._;
 
         var provider = {
-            deleteGlobalReference : function(){
+            deleteGlobalReference : function() {
                 delete $windowProvider.$get()._;
             },
-            $get : function (){
+            $get : function () {
                 return ngdashService(dash);
             }
         };
@@ -37,17 +37,17 @@
     //////////////////////////////////////////////////////////////////
 
     function isNullOrUndefined(dash, value) {
-            if(dash.isUndefined(value)) { return true; }
-            if(dash.isNull(value)) {return true;}
-            if(dash.isNumber(value)) {return dash.isNaN(value);}
-            return false;
+        if (dash.isUndefined(value)) { return true; }
+        if (dash.isNull(value)) {return true;}
+        if (dash.isNumber(value)) {return dash.isNaN(value);}
+        return false;
     }
 
     function isNullOrEmpty(dash, value) {
-            if(dash.isNullOrUndefined(value)) {return true;}
-            if(dash.isString(value) && value === '') {return true;}
-            if(dash.isNumber(value)) {return dash.isNaN(value);}
-            if(dash.isArray(value)) {return value.length === 0;}
+            if (dash.isNullOrUndefined(value)) {return true;}
+            if (dash.isString(value) && value === '') {return true;}
+            if (dash.isNumber(value)) {return dash.isNaN(value);}
+            if (dash.isArray(value)) {return value.length === 0;}
             return false;
         };
 

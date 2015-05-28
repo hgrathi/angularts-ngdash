@@ -28,6 +28,11 @@
     "gulp-inject": "~1.2.0",
     "gulp-uglify": "~1.2.0",
     "gulp-load-plugins": "~0.10.0",
-    "wiredep": "~2.2.2"
+    "wiredep": "~2.2.2",
+    "del": "~1.2.0",
+    "gulp-jsbeautifier": "0.0.8",
+    "gulp-jshint": "~1.11.0",
+    "gulp-jscs": "~1.6.0",
+    "gulp-sequence": "~0.3.2"
   }
 }

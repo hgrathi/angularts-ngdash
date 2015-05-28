@@ -2,24 +2,33 @@
 <html ng-app="testmodule">
 	<head>
 		<!-- bower:css -->
+		<link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.css" />
 		<!-- endbower -->
 	</head>
-	<body ng-controller="testController as vm">
+	<body ng-controller="testController as vm" class="container">
 		<div ng-repeat="row in vm.nullUndefined">
-			<div>value : {{row.value}}</div>
-			<div>result : {{row.result}}</div>
+			<div class="row well">
+				<div class="col-md-2">isNullOrUndefined</div>
+				<div class="col-md-2">value : {{row.value}}</div>
+				<div class="col-md-2">result : {{row.result}}</div>
+			</div>
 		</div>
 		<div ng-repeat="row in vm.nullEmpty">
-			<div>value : {{row.value}}</div>
-			<div>result : {{row.result}}</div>
+			<div class="row well">
+				<div class="col-md-2">isNullOrEmpty</div>
+				<div class="col-md-2">value : {{row.value}}</div>
+				<div class="col-md-2">result : {{row.result}}</div>
+			</div>
 		</div>
 		<!-- bower:js -->
 		<script src="bower_components/lodash/lodash.js"></script>
 		<script src="bower_components/angularjs/angular.js"></script>
 		<!-- endbower -->
-		<!-- inject:sourcejs source.js -->
+		<!-- sourcejs:js -->
+		<script src="src/ngdash.js"></script>
 		<!-- endinject -->
-		<!-- inject:testfixturejs testfixture.js -->
+		<!-- testfixturejs:js -->
+		<script src="tests/testsfixture.js"></script>
 		<!-- endinject -->
 	</body>
 </html>

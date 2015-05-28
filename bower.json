@@ -5,6 +5,7 @@
   "authors": [
     "Harish Rathi <harish.rathi@algosystech.com>"
   ],
+  "main": ["./dist/ngdash.js"],
   "description": "load lodash in angular way",
   "keywords": [
     "angularjs",
@@ -21,5 +22,8 @@
   "dependencies": {
     "lodash": "~3.9.3",
     "angularjs": "~1.4.0"
+  },
+  "devDependencies": {
+    "bootstrap-css-only": "~3.3.4"
   }
 }
