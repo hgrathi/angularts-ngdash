@@ -21,7 +21,7 @@
     "url": "https://github.com/hgrathi/angularts-ngdash/issues"
   },
   "homepage": "https://github.com/hgrathi/angularts-ngdash",
-  "dependencies": {
+  "devDependencies": {
     "gulp": "~3.8.11",
     "gulp-webserver": "~0.9.1",
     "gulp-rename": "~1.2.2",
