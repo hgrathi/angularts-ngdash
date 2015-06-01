@@ -63,9 +63,20 @@ gulp.task('inject', function () {
 gulp.task('serve', ['wiredep','inject'], function () {
   return gulp.src(config.base)
     .pipe(plugins.webserver({
+        host: 'localhost',
         port: process.env.PORT || 8080,
         livereload: true,
         open: true,
 		fallback: config.index
+    }));
+});
+
+gulp.task('heroku', ['wiredep','inject'], function () {
+  return gulp.src(config.base)
+    .pipe(plugins.webserver({
+        host: '0.0.0.0',
+        port: process.env.PORT,
+        livereload: false,
+        open: false
     }));
 });
