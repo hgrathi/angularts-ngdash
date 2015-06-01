@@ -63,7 +63,7 @@ gulp.task('inject', function () {
 gulp.task('serve', ['wiredep','inject'], function () {
   return gulp.src(config.base)
     .pipe(plugins.webserver({
-        host: 'localhost',
+        //host: 'localhost',
         port: process.env.PORT || 8080,
         livereload: true,
         open: true,
