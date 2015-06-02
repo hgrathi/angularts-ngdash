@@ -96,7 +96,7 @@ function getReleaseType(){
     if(types.indexOf(rel) === -1){
         rel = 'minor'
     }
-    return rel.toUpperCase();
+    return rel.toLowerCase();
 }
 
 gulp.task('bump-version', function () {
@@ -117,7 +117,7 @@ gulp.task('push-changes', function (cb) {
 gulp.task('create-new-tag', function (cb) {
   var version = getPackageJsonVersion();
   plugins.git.tag(version, 'Created Tag for version: ' + version, function (error) {
-    if (error) {      return cb(error);    }
+    if (error) { return cb(error); }
     plugins.git.push('origin', 'master', {args: '--tags'}, cb);
   });
 
