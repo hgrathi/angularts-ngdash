@@ -92,7 +92,7 @@ gulp.task('bump', function(){
 
 function getReleaseType(){
     var types = ['major','minor','patch'];
-    var rel = argv.release || 'minor';
+    var rel = argv.type || 'minor';
     if(types.indexOf(rel) === -1){
         rel = 'minor'
     }
