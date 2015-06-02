@@ -1,11 +1,13 @@
 {
   "name": "angularts-ngdash",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "homepage": "https://github.com/hgrathi/angularts-ngdash",
   "authors": [
     "Harish Rathi <harish.rathi@algosystech.com>"
   ],
-  "main": ["./dist/ngdash.js"],
+  "main": [
+    "./dist/ngdash.js"
+  ],
   "description": "load lodash in angular way",
   "keywords": [
     "angularjs",

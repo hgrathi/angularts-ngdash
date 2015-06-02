@@ -1,6 +1,8 @@
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')({ lazy: true, camelize: true });
 var config = require('./gulp.config')();
+var argv = require('yargs').argv;
+var fs = require('fs');
 
 var del = require('del');
 gulp.task('clean', function (cb) {
@@ -80,4 +82,76 @@ gulp.task('heroku', ['wiredep','inject'], function () {
         open: false,
 		fallback: config.index
     }));
+});
+
+gulp.task('bump', function(){
+    return gulp.src(['./bower.json', './package.json'])
+        .pipe(plugins.bump({type:getReleaseType()}))
+        .pipe(gulp.dest('./'));
+})
+
+function getReleaseType(){
+    var types = ['major','minor','patch'];
+    var rel = argv.release || 'minor';
+    if(types.indexOf(rel) === -1){
+        rel = 'minor'
+    }
+    return rel.toUpperCase();
+}
+
+gulp.task('bump-version', function () {
+  return gulp.src(['./bower.json', './package.json'])
+    .pipe(plugins.bump({type: getReleaseType()}).on('error', plugins.util.log))
+    .pipe(gulp.dest('./'));
+});
+
+gulp.task('commit-changes', function () {
+  return gulp.src(config.base)
+    .pipe(plugins.git.commit('[' + getReleaseType() +'] Bumped version number', {args: '-a'}));
+});
+
+gulp.task('push-changes', function (cb) {
+  plugins.git.push('origin', 'master', cb);
+});
+
+gulp.task('create-new-tag', function (cb) {
+  var version = getPackageJsonVersion();
+  plugins.git.tag(version, 'Created Tag for version: ' + version, function (error) {
+    if (error) {      return cb(error);    }
+    plugins.git.push('origin', 'master', {args: '--tags'}, cb);
+  });
+
+  function getPackageJsonVersion () {
+    //We parse the json file instead of using require because require caches multiple calls so the version number won't be updated
+    return JSON.parse(fs.readFileSync('./package.json', 'utf8')).version;
+  };
+});
+
+gulp.task('release', function (callback) {
+    function handleError(error){
+        if (error) {
+            console.log(error.message);
+        } else {
+            console.log('RELEASE FINISHED SUCCESSFULLY');
+        }
+        callback(error);
+    }
+  plugins.sequence('bump-version','commit-changes','push-changes','create-new-tag', handleError);
+});
+
+gulp.task('push-ci-branch', function (cb) {
+  plugins.git.push('heroku', 'master', cb);
+});
+
+
+gulp.task('publish', function(callback) {
+    function handleError(error){
+        if (error) {
+            console.log(error.message);
+        } else {
+            console.log('RELEASE FINISHED SUCCESSFULLY');
+        }
+        callback(error);
+    }
+    plugins.sequence('release', 'push-ci-branch', handleError);
 });
