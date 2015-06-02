@@ -37,7 +37,7 @@ gulp.task('dist-min', function(){
         .pipe(gulp.dest(config.dist));     
 });
 
-gulp.task('release', function(cb){
+gulp.task('build', function(cb){
    plugins.sequence('clean', 'jscs', ['dist-nomin', 'dist-min'], cb); 
 });
 
@@ -84,11 +84,7 @@ gulp.task('heroku', ['wiredep','inject'], function () {
     }));
 });
 
-gulp.task('bump', function(){
-    return gulp.src(['./bower.json', './package.json'])
-        .pipe(plugins.bump({type:getReleaseType()}))
-        .pipe(gulp.dest('./'));
-})
+///////////////////////////////////////// RELEASE - PUBLISH //////////////////////////////////////////////
 
 function getReleaseType(){
     var types = ['major','minor','patch'];
