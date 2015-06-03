@@ -1,3 +1,6 @@
+
+////////////////////////////////////// START ///////////////////////////////////////////////////////////////
+
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')({ lazy: true, camelize: true });
 var config = require('./gulp.config')();
@@ -162,3 +165,5 @@ gulp.task('publish', function(callback) {
     }
     plugins.sequence('release', 'push-ci-branch', handleError);
 });
+
+/////////////////////////////////////////////////////  END //////////////////////////////////////
