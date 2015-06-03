@@ -58,7 +58,7 @@ gulp.task('clean', function (cb) {
 
 gulp.task('jsbeautify', function(){
    return gulp.src(config.sourcejs)
-   .pipe(plugins.jsbeautifier()); 
+   .pipe(plugins.jsbeautifier());
 });
 
 gulp.task('jscs', ['jsbeautify'], function(){
@@ -74,24 +74,24 @@ gulp.task('jshint',['jscs'], function(){
 
 gulp.task('dist-nomin', function(){
    return gulp.src(config.sourcejs)
-        .pipe(gulp.dest(config.dist)); 
+        .pipe(gulp.dest(config.dist));
 });
 
 gulp.task('dist-min', function(){
    return gulp.src(config.sourcejs)
         .pipe(plugins.concat('ngdash.min.js'))
         .pipe(plugins.uglify())
-        .pipe(gulp.dest(config.dist));     
+        .pipe(gulp.dest(config.dist));
 });
 
 gulp.task('build', function(cb){
-   plugins.sequence('clean', 'jshint', ['dist-nomin', 'dist-min'], cb); 
+   plugins.sequence('clean', 'jshint', ['dist-nomin', 'dist-min'], cb);
 });
 
 /////////////////////////////////////////// TEST /////////////////////////////////////////////////////////
 
 gulp.task('test', function(){
-    return gulp.src(config.tests)
+    return gulp.src('./foo/bar')
     .pipe(plugins.karma({action : 'run', configFile: './karma.conf.js'}));
 })
 

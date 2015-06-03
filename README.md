@@ -15,7 +15,7 @@ Require it into your application (after Angular)
 Add the module as a dependency to your app
 
 ```js
-var app = angular.module('app', ['tpl.ngdash']);
+var app = angular.module('app', ['angularts.ngdash']);
 ```
 
 And inject it into your controller like so!

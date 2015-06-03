@@ -2,7 +2,7 @@
 (function(angular){
 
 	angular
-		.module('testmodule', ['tpl.ngdash'])
+		.module('testmodule', ['angularts.ngdash'])
 		.controller('testController', testController);
 		
     //////////////////////////////////////////////////////////////////	

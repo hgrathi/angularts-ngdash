@@ -4,19 +4,18 @@
     'use strict';
 
     angular
-        .module('tpl.ngdash', [])
+        .module('angularts.ngdash', [])
         .provider('ngdash', ngdashProvider);
 
     //////////////////////////////////////////////////////////////////
 
-    ngdashProvider.$inject = ['$windowProvider'];
-    function ngdashProvider($windowProvider) {
+    function ngdashProvider() {
 
-        var dash = $windowProvider.$get()._;
+        var dash = window._;
 
         var provider = {
             deleteGlobalReference : function() {
-                delete $windowProvider.$get()._;
+                delete window._;
             },
             $get : function () {
                 return ngdashService(dash);
