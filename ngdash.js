@@ -38,15 +38,19 @@
     function isNullOrUndefined(dash, value) {
         if (dash.isUndefined(value)) { return true; }
         if (dash.isNull(value)) {return true;}
-        if (dash.isNumber(value)) {return dash.isNaN(value);}
         return false;
     }
 
     function isNullOrEmpty(dash, value) {
             if (dash.isNullOrUndefined(value)) {return true;}
+            if (dash.isFunction(value)) {return false;}
             if (dash.isString(value) && value === '') {return true;}
             if (dash.isNumber(value)) {return dash.isNaN(value);}
             if (dash.isArray(value)) {return value.length === 0;}
+            if (dash.isPlainObject(value)) {
+                for (var prop in value) { if (value.hasOwnProperty(prop)) {return false; }}
+                return true;
+            }
             return false;
         };
 

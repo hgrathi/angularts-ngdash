@@ -144,7 +144,7 @@ gulp.task('release', function (callback) {
         }
         callback(error);
     }
-  plugins.sequence('build', 'bump-version','commit-changes','push-changes','create-new-tag', handleError);
+  plugins.sequence('test', 'build', 'bump-version','commit-changes','push-changes','create-new-tag', handleError);
 });
 
 gulp.task('push-ci-branch', function (cb) {
