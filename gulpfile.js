@@ -4,6 +4,53 @@ var config = require('./gulp.config')();
 var argv = require('yargs').argv;
 var fs = require('fs');
 
+////////////////////////////////////////// Local RUN /////////////////////////////////////////////////////////
+
+var wiredep = require('wiredep');
+gulp.task('wiredep', function () {
+    var wconfig = { directory: './bower_components/', verbose: true, devDependencies: true };
+    return gulp.src(config.index)
+        .pipe(wiredep.stream(wconfig))
+        .pipe(gulp.dest(config.base));
+});
+
+gulp.task('inject', function () {
+    var sourcejs = gulp.src(config.sourcejs, { read: false });
+    var sourceopt = { name: 'sourcejs', addRootSlash: false };
+
+    var testjs = gulp.src(config.testfixturejs, { read: false });
+    var testopt = { name: 'testfixturejs', addRootSlash: false };
+
+    return gulp.src(config.index)
+        .pipe(plugins.inject(sourcejs, sourceopt))
+        .pipe(plugins.inject(testjs, testopt))
+        .pipe(gulp.dest(config.base));
+});
+
+gulp.task('serve', ['wiredep','inject'], function () {
+  return gulp.src(config.base)
+    .pipe(plugins.webserver({
+        host: process.env.IP || 'localhost',
+        port: process.env.PORT || 8080,
+        livereload: true,
+        open: true,
+		fallback: config.index
+    }));
+});
+
+gulp.task('heroku', ['wiredep','inject'], function () {
+  return gulp.src(config.base)
+    .pipe(plugins.webserver({
+        host: '0.0.0.0',
+        port: process.env.PORT,
+        livereload: false,
+        open: false,
+		fallback: config.index
+    }));
+});
+
+////////////////////////////////////////// BUILD /////////////////////////////////////////////////////////
+
 var del = require('del');
 gulp.task('clean', function (cb) {
     del(config.dist, cb);
@@ -38,51 +85,16 @@ gulp.task('dist-min', function(){
 });
 
 gulp.task('build', function(cb){
-   plugins.sequence('clean', 'jscs', ['dist-nomin', 'dist-min'], cb); 
+   plugins.sequence('clean', 'jshint', ['dist-nomin', 'dist-min'], cb); 
 });
 
-var wiredep = require('wiredep');
-gulp.task('wiredep', function () {
-    var wconfig = { directory: './bower_components/', verbose: true, devDependencies: true };
-    return gulp.src(config.index)
-        .pipe(wiredep.stream(wconfig))
-        .pipe(gulp.dest(config.base));
-});
+/////////////////////////////////////////// TEST /////////////////////////////////////////////////////////
 
-gulp.task('inject', function () {
-    var sourcejs = gulp.src(config.sourcejs, { read: false });
-    var sourceopt = { name: 'sourcejs', addRootSlash: false };
+gulp.task('test', function(){
+    return gulp.src(config.tests)
+    .pipe(plugins.karma({action : 'run', configFile: './karma.conf.js'}));
+})
 
-    var testjs = gulp.src(config.testfixturejs, { read: false });
-    var testopt = { name: 'testfixturejs', addRootSlash: false };
-
-    return gulp.src(config.index)
-        .pipe(plugins.inject(sourcejs, sourceopt))
-        .pipe(plugins.inject(testjs, testopt))
-        .pipe(gulp.dest(config.base));
-});
-
-gulp.task('serve', ['wiredep','inject'], function () {
-  return gulp.src(config.base)
-    .pipe(plugins.webserver({
-        host: 'localhost',
-        port: 8080,
-        livereload: true,
-        open: true,
-		fallback: config.index
-    }));
-});
-
-gulp.task('heroku', ['wiredep','inject'], function () {
-  return gulp.src(config.base)
-    .pipe(plugins.webserver({
-        host: '0.0.0.0',
-        port: process.env.PORT,
-        livereload: false,
-        open: false,
-		fallback: config.index
-    }));
-});
 
 ///////////////////////////////////////// RELEASE - PUBLISH //////////////////////////////////////////////
 
@@ -90,7 +102,7 @@ function getReleaseType(){
     var types = ['major','minor','patch'];
     var rel = argv.type || 'minor';
     if(types.indexOf(rel) === -1){
-        rel = 'minor'
+        rel = 'patch'
     }
     return rel.toLowerCase();
 }
@@ -132,13 +144,12 @@ gulp.task('release', function (callback) {
         }
         callback(error);
     }
-  plugins.sequence('bump-version','commit-changes','push-changes','create-new-tag', handleError);
+  plugins.sequence('build', 'bump-version','commit-changes','push-changes','create-new-tag', handleError);
 });
 
 gulp.task('push-ci-branch', function (cb) {
   plugins.git.push('heroku', 'master', cb);
 });
-
 
 gulp.task('publish', function(callback) {
     function handleError(error){

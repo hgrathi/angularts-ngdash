@@ -7,7 +7,7 @@
     "test": "gulp test",
     "postinstall": "./node_modules/bower/bin/bower install",
     "_update": "npm install && npm prune && bower install && bower prune",
-    "_init": "npm install -g gulp bower && npm run update"
+    "_init": "npm install -g gulp bower karma karma-cli phantomjs && npm run update"
   },
   "cacheDirectories": [
     "node_modules",
@@ -38,6 +38,7 @@
     "gulp-jsbeautifier": "0.0.8",
     "gulp-jscs": "~1.6.0",
     "gulp-jshint": "~1.11.0",
+    "gulp-karma": "0.0.4",
     "gulp-load-plugins": "~0.10.0",
     "gulp-rename": "~1.2.2",
     "gulp-sequence": "~0.3.2",

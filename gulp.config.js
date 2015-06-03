@@ -4,8 +4,8 @@ module.exports = function(){
 		base: '.',
 		index: 'index.html',
     	sourcejs: ['./src/**/*.js'],
-    	testfixturejs: ['./tests/**/*.js'],
-		tests: [],
+    	testfixturejs: ['./testfixture/**/*.js'],
+		tests: ['./tests/**/*.spec.js'],
 		dist: './dist/'
 	};
 	
