@@ -1,6 +1,6 @@
 {
   "name": "angularts-ngdash",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "homepage": "https://github.com/hgrathi/angularts-ngdash",
   "authors": [
     "Harish Rathi <harish.rathi@algosystech.com>"
@@ -18,8 +18,15 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "test",
-    "tests"
+    "testfixture",
+    "tests",
+    "src",
+    "gulp.config.js",
+    "gulpfile.js",
+    "index.html",
+    "karma.conf.js",
+    "package.json",
+    "Procfile"
   ],
   "dependencies": {
     "lodash": "*",

@@ -1,6 +1,6 @@
 {
   "name": "angularts-ngdash",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "add lodash as a dependency in angularjs way",
   "main": "index.js",
   "scripts": {
