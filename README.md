@@ -3,6 +3,9 @@ ngdash
 
 Inject [Lo-Dash](http://lodash.com/) in angular way.
 
+[![Build Status](https://travis-ci.org/hgrathi/angularts-ngdash.svg?branch=master)](https://travis-ci.org/hgrathi/angularts-ngdash)
+[![Dependency Status](https://gemnasium.com/hgrathi/angularts-ngdash.svg)](https://gemnasium.com/hgrathi/angularts-ngdash)
+
 ## Installing
 Install via bower
 
