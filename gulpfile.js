@@ -6,6 +6,7 @@ var plugins = require('gulp-load-plugins')({ lazy: true, camelize: true });
 var config = require('./gulp.config')();
 var argv = require('yargs').argv;
 var fs = require('fs');
+var sequence = require("gulp-sequence").use(gulp);
 
 ////////////////////////////////////////// Local RUN /////////////////////////////////////////////////////////
 
@@ -88,7 +89,7 @@ gulp.task('dist-min', function(){
 });
 
 gulp.task('build', function(cb){
-   plugins.sequence('clean', 'jshint', ['dist-nomin', 'dist-min'], cb);
+   sequence('clean', 'jshint', ['dist-nomin', 'dist-min'], cb);
 });
 
 /////////////////////////////////////////// TEST /////////////////////////////////////////////////////////
@@ -97,7 +98,6 @@ gulp.task('test', function(){
     return gulp.src('./foo/bar')
     .pipe(plugins.karma({action : 'run', configFile: './karma.conf.js'}));
 })
-
 
 ///////////////////////////////////////// RELEASE - PUBLISH //////////////////////////////////////////////
 
@@ -147,7 +147,7 @@ gulp.task('release', function (callback) {
         }
         callback(error);
     }
-  plugins.sequence('test', 'build', 'bump-version','commit-changes','push-changes','create-new-tag', handleError);
+  sequence('test', 'build', 'bump-version','commit-changes','push-changes','create-new-tag', handleError);
 });
 
 gulp.task('push-ci-branch', function (cb) {
@@ -163,7 +163,7 @@ gulp.task('publish', function(callback) {
         }
         callback(error);
     }
-    plugins.sequence('release', 'push-ci-branch', handleError);
+    sequence('release', 'push-ci-branch', handleError);
 });
 
 /////////////////////////////////////////////////////  END //////////////////////////////////////
