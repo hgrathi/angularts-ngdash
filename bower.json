@@ -22,8 +22,8 @@
     "tests"
   ],
   "dependencies": {
-    "lodash": "~3.9.3",
-    "angularjs": "~1.4.0"
+    "lodash": "*",
+    "angularjs": "*"
   },
   "devDependencies": {
     "bootstrap-css-only": "~3.3.4",
