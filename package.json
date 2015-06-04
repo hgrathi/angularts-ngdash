@@ -6,8 +6,8 @@
   "scripts": {
     "test": "gulp test",
     "postinstall": "./node_modules/bower/bin/bower install",
-    "_update": "npm install && npm prune && bower install && bower prune",
-    "_init": "npm install -g gulp bower karma karma-cli phantomjs next-update && npm run update"
+    "update": "npm install && npm prune && bower install && bower prune",
+    "init": "npm install -g gulp bower karma karma-cli phantomjs next-update && npm run update"
   },
   "cacheDirectories": [
     "node_modules",
