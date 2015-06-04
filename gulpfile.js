@@ -117,13 +117,19 @@ gulp.task('bump-version', function () {
 });
 
 gulp.task('commit-changes', function () {
+  var version = getPackageJsonVersion();
   return gulp.src(config.base)
-    .pipe(plugins.git.commit('[' + getReleaseType() +'] Bumped version number', {args: '-a'}));
+    .pipe(plugins.git.commit('[ ' + getReleaseType() +' ] Bumped version number : ' + version, {args: '-a'}));
 });
 
 gulp.task('push-changes', function (cb) {
   plugins.git.push('origin', 'master', cb);
 });
+
+function getPackageJsonVersion () {
+//We parse the json file instead of using require because require caches multiple calls so the version number won't be updated
+return JSON.parse(fs.readFileSync('./package.json', 'utf8')).version;
+};
 
 gulp.task('create-new-tag', function (cb) {
   var version = getPackageJsonVersion();
@@ -131,11 +137,6 @@ gulp.task('create-new-tag', function (cb) {
     if (error) { return cb(error); }
     plugins.git.push('origin', 'master', {args: '--tags'}, cb);
   });
-
-  function getPackageJsonVersion () {
-    //We parse the json file instead of using require because require caches multiple calls so the version number won't be updated
-    return JSON.parse(fs.readFileSync('./package.json', 'utf8')).version;
-  };
 });
 
 gulp.task('release', function (callback) {
