@@ -62,18 +62,15 @@ gulp.task('clean', function (cb) {
 
 gulp.task('jsbeautify', function(){
    return gulp.src(config.sourcejs)
-   .pipe(plugins.jsbeautifier());
+   .pipe(gulp.dest(config.srcbase));
 });
 
-gulp.task('jscs', ['jsbeautify'], function(){
+gulp.task('jslint', ['jsbeautify'], function(){
     return gulp.src(config.sourcejs)
+   .pipe(plugins.jsbeautifier())
     .pipe(plugins.jscs({configPath: '.jscsrc', fix: true}))
-    .pipe(gulp.dest(config.base));
-});
-
-gulp.task('jshint',['jscs'], function(){
-    return gulp.src(config.sourcejs)
-    .pipe(plugins.jshint());
+    .pipe(plugins.jshint())
+    .pipe(gulp.dest(config.srcbase));
 });
 
 gulp.task('dist-nomin', function(){
@@ -89,7 +86,7 @@ gulp.task('dist-min', function(){
 });
 
 gulp.task('build', function(cb){
-   sequence('clean', 'jshint', ['dist-nomin', 'dist-min'], cb);
+   sequence('clean', 'jslint', ['dist-nomin', 'dist-min'], cb);
 });
 
 /////////////////////////////////////////// TEST /////////////////////////////////////////////////////////
@@ -110,17 +107,12 @@ function getReleaseType(){
     return rel.toLowerCase();
 }
 
-var bumpOpt= {};
+var bumpOpt = { type: plugins.util.env.type };
+var bumpPrompt = { type: 'list', name: 'bump', message: 'What type of bump would you like to do? ', choices: ['patch', 'minor', 'major'] };
+
 gulp.task('bump-version', function () {
   return gulp.src(['./bower.json', './package.json'])
-    .pipe(plugins.prompt.prompt({
-        type: 'list',
-        name: 'bump',
-        message: 'What type of bump would you like to do? ',
-        choices: ['patch', 'minor', 'major']
-    }, function(res){
-        bumpOpt.type = res.bump;
-    }))
+    .pipe(plugins.if(!bumpOpt.type, plugins.prompt.prompt(bumpPrompt, function(res){ bumpOpt.type = res.bump; })))
     .pipe(plugins.bump(bumpOpt).on('error', plugins.util.log))
     .pipe(gulp.dest('./'));
 });

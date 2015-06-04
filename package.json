@@ -1,6 +1,6 @@
 {
   "name": "angularts-ngdash",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "add lodash as a dependency in angularjs way",
   "main": "index.js",
   "scripts": {
@@ -34,6 +34,7 @@
     "gulp-bump": "~0.3.1",
     "gulp-concat": "~2.5.2",
     "gulp-git": "~1.2.4",
+    "gulp-if": "^1.2.5",
     "gulp-inject": "~1.2.0",
     "gulp-jsbeautifier": "~0.0.8",
     "gulp-jscs": "~1.6.0",
