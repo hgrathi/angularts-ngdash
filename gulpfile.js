@@ -110,16 +110,25 @@ function getReleaseType(){
     return rel.toLowerCase();
 }
 
+var inputs= {};
 gulp.task('bump-version', function () {
   return gulp.src(['./bower.json', './package.json'])
-    .pipe(plugins.bump({type: getReleaseType()}).on('error', plugins.util.log))
+    .pipe(plugins.prompt.prompt({
+        type: 'checkbox',
+        name: 'bump',
+        message: 'What type of bump would you like to do?',
+        choices: ['patch', 'minor', 'major']
+    }, function(res){
+        inputs.type = res;
+    }))
+    .pipe(plugins.bump({type: inputs.type}).on('error', plugins.util.log))
     .pipe(gulp.dest('./'));
 });
 
 gulp.task('commit-changes', function () {
   var version = getPackageJsonVersion();
   return gulp.src(config.base)
-    .pipe(plugins.git.commit('[ ' + getReleaseType() +' ] Bumped version number : ' + version, {args: '-a'}));
+    .pipe(plugins.git.commit('[ ' + inputs.type +' ] Bumped version number : ' + version, {args: '-a'}));
 });
 
 gulp.task('push-changes', function (cb) {
