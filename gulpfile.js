@@ -119,7 +119,7 @@ gulp.task('bump-version', function () {
         message: 'What type of bump would you like to do?',
         choices: ['patch', 'minor', 'major']
     }, function(res){
-        inputs.type = res;
+        inputs.type = res.bump;
     }))
     .pipe(plugins.bump({type: inputs.type}).on('error', plugins.util.log))
     .pipe(gulp.dest('./'));
