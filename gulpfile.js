@@ -110,25 +110,25 @@ function getReleaseType(){
     return rel.toLowerCase();
 }
 
-var inputs= {};
+var bumpOpt= {};
 gulp.task('bump-version', function () {
   return gulp.src(['./bower.json', './package.json'])
     .pipe(plugins.prompt.prompt({
-        type: 'checkbox',
+        type: 'list',
         name: 'bump',
-        message: 'What type of bump would you like to do?',
+        message: 'What type of bump would you like to do? ',
         choices: ['patch', 'minor', 'major']
     }, function(res){
-        inputs.type = res.bump;
+        bumpOpt.type = res.bump;
     }))
-    .pipe(plugins.bump({type: inputs.type}).on('error', plugins.util.log))
+    .pipe(plugins.bump(bumpOpt).on('error', plugins.util.log))
     .pipe(gulp.dest('./'));
 });
 
 gulp.task('commit-changes', function () {
   var version = getPackageJsonVersion();
   return gulp.src(config.base)
-    .pipe(plugins.git.commit('[ ' + inputs.type +' ] Bumped version number : ' + version, {args: '-a'}));
+    .pipe(plugins.git.commit('[ ' + bumpOpt.type +' ] Bumped version number : ' + version, {args: '-a'}));
 });
 
 gulp.task('push-changes', function (cb) {
@@ -157,7 +157,7 @@ gulp.task('release', function (callback) {
         }
         callback(error);
     }
-  sequence('test', 'build', 'bump-version','commit-changes','push-changes','create-new-tag', handleError);
+    sequence('test', 'build', 'bump-version','commit-changes','push-changes','create-new-tag', handleError);
 });
 
 gulp.task('push-ci-branch', function (cb) {
