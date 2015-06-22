@@ -60,12 +60,7 @@ gulp.task('clean', function (cb) {
     del(config.dist, cb);
 });
 
-gulp.task('jsbeautify', function(){
-   return gulp.src(config.sourcejs)
-   .pipe(gulp.dest(config.srcbase));
-});
-
-gulp.task('jslint', ['jsbeautify'], function(){
+gulp.task('jslint', function(){
     return gulp.src(config.sourcejs)
    .pipe(plugins.jsbeautifier())
     .pipe(plugins.jscs({configPath: '.jscsrc', fix: true}))
