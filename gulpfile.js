@@ -61,8 +61,8 @@ gulp.task('clean', function (cb) {
 });
 
 gulp.task('jslint', function(){
-    return gulp.src(config.sourcejs)
-   .pipe(plugins.jsbeautifier())
+    return gulp.src(config.sourcejs, {base : config.base})
+    .pipe(plugins.jsbeautifier())
     .pipe(plugins.jscs({configPath: '.jscsrc', fix: true}))
     .pipe(plugins.jshint())
     .pipe(gulp.dest(config.srcbase));
