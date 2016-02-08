@@ -56,8 +56,8 @@ gulp.task('heroku', ['wiredep','inject'], function () {
 ////////////////////////////////////////// BUILD /////////////////////////////////////////////////////////
 
 var del = require('del');
-gulp.task('clean', function (cb) {
-    del(config.dist, cb);
+gulp.task('clean', function () {
+    return del(config.dist);
 });
 
 gulp.task('jslint', function(){
